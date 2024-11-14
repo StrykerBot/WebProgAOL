@@ -14,10 +14,10 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $categories = ['Traditional', 'Spicy', 'Non-Spicy', 'Vegan'];
+        $categories = ['Traditional', 'Spicy', 'Low-Calorie', 'Vegan'];
         $len = count($categories);
         for($i=0;$i<$len;$i++){
-            DB::table('categories')->insert([
+            Category::insert([
                 'name'=>$categories[$i]
             ]);
         }

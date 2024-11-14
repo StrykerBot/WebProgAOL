@@ -17,7 +17,7 @@ class FoodSeeder extends Seeder
         $foods = ['Ketoprak', 'Gado-gado', 'Salad', 'Rujak', 'Nasi Goreng'];
         $len = count($foods);
         for($i=0;$i<$len;$i++){
-            DB::table('foods')->insert([
+           Food::insert([
                 'name'=>$foods[$i],
                 'price'=>rand(30000, 100000),
                 'img_path'=>$foods[$i].'.jpeg'
