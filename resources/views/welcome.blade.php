@@ -14,6 +14,7 @@
             @foreach ($food->categories as $category)
                 <li>{{ $category->name }}</li>
             @endforeach
+            <img src="{{'storage/img/'.$food->img_path}}" alt="img">
         </ul>
     @endforeach
 
