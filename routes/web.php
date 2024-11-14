@@ -10,6 +10,7 @@ Route::get('/', function () {
 });
 
 Route::get('/home', [PageController::class, 'showHomePage']);
-Route::get('/mainMenu', [PageController::class, 'showMainMenu']);
+Route::get('/mainmenu/{cat:name}',[PageController::class, 'showBasedCategory'])->name('mainmenu.category');
+Route::get('/mainmenu', [PageController::class, 'showMainMenu']);
 Route::get('/cart', [PageController::class, 'showCart']);
 Route::get('/payment', [PageController::class, 'showPayment']);
