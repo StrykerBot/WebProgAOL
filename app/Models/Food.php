@@ -8,6 +8,6 @@ class Food extends Model
 {
     protected $table = 'foods';
     public function categories(){
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'categories_foods', 'food_id', 'category_id');
     }
 }
