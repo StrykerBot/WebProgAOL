@@ -9,6 +9,7 @@ Route::get('/', function () {
     return view('welcome', compact('foods'));
 });
 
+Route::get('/start', [PageController::class, 'showStartPage']);
 Route::get('/home', [PageController::class, 'showHomePage']);
 Route::get('/mainmenu/{cat:name}',[PageController::class, 'showBasedCategory'])->name('mainmenu.category');
 Route::get('/mainmenu', [PageController::class, 'showMainMenu']);
