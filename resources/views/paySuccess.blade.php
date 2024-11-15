@@ -22,9 +22,15 @@
                 <img src="{{asset('storage/img/CheckMark.png')}}" alt="img">
             </div>
             <div class="row pt-4">
-                <button class="back-button" onclick="window.location.href='/start';">Back to menu</button>
+                <button class="back-button" onclick="clearStorageAndRedirect()">Back to menu</button>
             </div>
         </div>
     </div>
+    <script>
+        function clearStorageAndRedirect(){
+            localStorage.clear();
+            window.location.href = '/start';
+        }
+    </script>
 </body>
 </html>
