@@ -26,7 +26,7 @@ class PageController extends Controller
     public function showBasedCategory(Category $cat){
         Paginator::useBootstrapFive();
         $categories = Category::with('foods')->get();
-        $foods = $cat->foods()->paginate(1);
+        $foods = $cat->foods()->paginate(2);
         return view('mainMenu', compact('categories', 'cat', 'foods'));
     }
 #end-main-menu

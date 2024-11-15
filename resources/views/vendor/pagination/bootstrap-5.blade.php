@@ -3,7 +3,7 @@
         background-color: #28a745; 
         border-color: #28a745;
     }
-    .page-link{
+    .page-link, .page-link:hover{
         color: green;
     }
 </style>

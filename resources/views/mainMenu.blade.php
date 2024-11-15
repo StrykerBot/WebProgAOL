@@ -27,9 +27,12 @@
                     <input class="form-control me-2 ps-5" style="background-color: rgba(40, 216, 163, 0.24); border:none; border-radius:10px;" type="search" placeholder="Search" aria-label="Search">
                     <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
                 </div>
-                <button class="btn-sm border-0 px-3 ms-3" style="background-color: rgba(40, 216, 163, 0.24);">
-                    <i class="bi bi-cart-fill" style="color: #86C87E; font-size: 1.7rem; "></i>
+                
+                <button class="btn-sm border-0 px-3 ms-3 cart" style="background-color: rgba(40, 216, 163, 0.24);">
+                    <i class="bi bi-cart-fill" style="color: #86C87E; font-size: 1.7rem;"></i>
                 </button>
+                
+
             </form>
         </div>
     </nav>
@@ -62,7 +65,7 @@
         </div>
     </section>
     @if(isset($cat))
-        <section class="listFood">
+        <section class="listFood"> 
             <div class="container-sm border border-2 p-4 mb-3" style="border-radius:30px;">
                 <h2 class="mb-3" style="font-weight: 700;">{{ $cat->name }}</h2>
                 <div class="row g-4 align-items-center justify-content-center">
@@ -71,6 +74,7 @@
                             data-name="{{ $food->name }}" 
                             data-price="{{$food->price}}" 
                             data-img="{{ asset('storage/img/' . $food->img_path) }}"
+                            data-id = "{{$food->id}}"
                             style="cursor:pointer;">
                             <div class="card border-1" style="border-radius: 15px;">
                                 <div class="card-body">
@@ -98,12 +102,12 @@
                 <div class="modal-content" style="border-radius:20px;">
                     <div class="modal-header d-flex justify-content-between">
                         
-                        <button type="button" class="btn" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn" data-bs-dismiss="modal">Confirm</button>
+                        <button type="button" class="btn close" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn confirm" data-bs-dismiss="modal">Confirm</button>
                     </div>
                 <div class="modal-body">
                     <div class="position-relative mb-3">
-                        <img id="modalFoodImage" class="img-fluid" style="width:100%;"/>
+                        <img id="modalFoodImage" class="img-fluid" style="width:100%; border-radius:20px;"/>
                         <div class="position-absolute bottom-0 start-0 container" 
                             style="background-color: rgba(0, 0, 0, 0.5); color: white; width:70%;">
                             <div class="row p-2" >
@@ -136,38 +140,85 @@
     <script>
         
         document.addEventListener('DOMContentLoaded', function() {
+            // localStorage.clear();
             
             const foodItems = document.querySelectorAll('.food-item');
-
-            
+            let order = JSON.parse(localStorage.getItem('order')) || [];
+            let counter = 1;
+            function updateFoodBorders() {
+                const orderedItems = JSON.parse(localStorage.getItem('order')) || [];
+                
+                foodItems.forEach(function(item) {
+                    const foodId = item.getAttribute('data-id');
+                    const card = item.querySelector('.card');
+                    if (orderedItems.some(order => order.id === foodId)) {
+                        card.style.border = '2px solid #28D8A3';
+                    }
+                });
+            }
+            updateFoodBorders();
+            function updateCounter() {
+                counterDisplay.textContent = counter;
+            }
+            document.querySelector('.cart').addEventListener('click', function(event) {
+                event.preventDefault();
+                window.location.href = '/cart'; 
+            });
             foodItems.forEach(function(item) {
                 item.addEventListener('click', function() {
                     
                     const name = this.getAttribute('data-name');
                     const price = this.getAttribute('data-price');
                     const imgPath = this.getAttribute('data-img');
+                    const id = this.getAttribute('data-id');
                     const formattedPrice = parseFloat(price).toLocaleString('id-ID');
                     
                     document.getElementById('modalFoodName').textContent = name;
                     document.getElementById('modalFoodPrice').textContent = 'Rp. ' + formattedPrice;
                     document.getElementById('modalFoodImage').src = imgPath;
-
-                    
+                    const orderedItems = JSON.parse(localStorage.getItem('order')) || [];
+                    const findItem = orderedItems.find(order => order.id === id)
+                    if (findItem) {
+                        counter = findItem.quantity
+                        updateCounter();
+                    }
                     var myModal = new bootstrap.Modal(document.getElementById('foodModal'));
                     myModal.show();
+
+                    const confirmBtn = document.querySelector('.confirm');
+                    confirmBtn.addEventListener('click', function(){
+                        const quantity = parseInt(document.getElementById('counterDisplay').textContent)
+                        const existingItemIndex = order.findIndex(item => item.name === name);
+                        if (existingItemIndex !== -1) {
+                            order[existingItemIndex].quantity = quantity;
+                        } else{
+                            const foodItem = {
+                                id: item.getAttribute('data-id'), 
+                                name: name,
+                                price: price,
+                                quantity: quantity,
+                                imgPath: imgPath
+                            };
+                            order.push(foodItem);
+                        }
+                        localStorage.setItem('order', JSON.stringify(order));
+                        console.log(order); 
+                        counter = 1;
+                        updateCounter();
+                        updateFoodBorders();
+                    })
                 });
             });
 
             const counterDisplay = document.getElementById('counterDisplay');
             const decreaseBtn = document.getElementById('decreaseBtn');
             const increaseBtn = document.getElementById('increaseBtn');
-            let counter = 0;
+            const closeBtn = document.querySelector('.close');
+            
             counterDisplay.textContent = counter;
-            function updateCounter() {
-                counterDisplay.textContent = counter;
-            }
+            
             decreaseBtn.addEventListener('click', function() {
-                if (counter > 0) {
+                if (counter > 1) {
                     counter--;
                     updateCounter();
                 }
@@ -178,6 +229,12 @@
                 counter++;
                 updateCounter();
             });
+            closeBtn.addEventListener('click', function(){
+                counter = 1;
+                updateCounter();
+            })
+
+
         });
 
     </script>
