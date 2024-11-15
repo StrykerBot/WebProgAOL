@@ -21,7 +21,7 @@
                         <img src="storage/img/Logo.png" alt="img" class="img-fluid">
                     </div>
                 </div>
-                <button class="base-buttons buttons-large w-100 m-2 p-5"><a href="/home" class="text-decoration-none" style="color: white;">Start Order</a></button>
+                <button class="base-buttons buttons-large w-100 m-2 p-5" onclick="window.location.href='/home';">Start Order</button>
             </div>
             <div class="col promo d-flex justify-content-center align-items-center mx-4">
                 <div class="w-100">
