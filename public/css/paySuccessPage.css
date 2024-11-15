@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Ruda:wght@400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* .row{
+    margin-bottom: 1rem;
+} */
+
+.main-background{
+    background-color: white;
+    border-radius: 35px;
+    max-width: 98vw;
+    height: calc(100vh - 3rem);
+    overflow: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+    display: flex;
+}
+
+.main-box{
+    background-color: #E5E5E5;
+    border-radius: 35px;
+    width: 25vw;
+    height: 35vw;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-text{
+    font-family: "Ruda", sans-serif;
+    font-weight: 800;
+    font-size: 1.5vw;
+    line-height: 1.2;
+}
+
+.main-text.big{
+    font-size: 4vw;
+}
+
+.back-button{
+    background-color: #28d8a3;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    border-radius: 9px;
+    border: none;
+    height: 3.2vw;
+    width: 11vw;
+}

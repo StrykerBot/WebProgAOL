@@ -4,7 +4,7 @@
 
 <body style="background-color: #E5E5E5; overflow:hidden;">
     <div class="container-fluid main-background p-4 my-4">
-        <div class="row align-items-stretch d-flex">
+        <div class="row align-items-stretch d-flex h-100">
             <div class="col mx-4 my-2">
                 <div class="row justify-content-center">
                     <div class="col-auto">
@@ -21,15 +21,7 @@
                         <img src="storage/img/Logo.png" alt="img" class="img-fluid">
                     </div>
                 </div>
-                <div class="row align-items-start">
-                    <div class="col">
-                        <button class="base-buttons w-100 m-2 p-2">Language</button>
-                    </div>
-                    <div class="col">
-                        <button class="base-buttons w-100 m-2 p-2">Accessibility</button>
-                    </div>
-                </div>
-                <button class="base-buttons buttons-large w-100 m-2 p-4">Start Order</button>
+                <button class="base-buttons buttons-large w-100 m-2 p-5"><a href="/home" class="text-decoration-none" style="color: white;">Start Order</a></button>
             </div>
             <div class="col promo d-flex justify-content-center align-items-center mx-4">
                 <div class="w-100">

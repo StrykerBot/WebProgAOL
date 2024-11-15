@@ -28,6 +28,13 @@
     gap: 10px;
 }
 
+a.base-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+}
+
 .button-img{
     background-color: white;
     border-radius: 30px;
@@ -43,8 +50,9 @@
 }
 
 .button-text{
-    flex-grow: 1;
     font-family: "Poppins", sans-serif;
     font-weight: 700;
     font-size: 2rem;
+    margin-left: auto;
+    width: 50%;
 }

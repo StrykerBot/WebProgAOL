@@ -39,4 +39,8 @@ class PageController extends Controller
 
         return view('payment');
     }
+
+    public function showPaySuccess(){
+        return view('paySuccess');
+    }
 }
