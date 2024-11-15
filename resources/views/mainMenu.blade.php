@@ -141,10 +141,15 @@
         
         document.addEventListener('DOMContentLoaded', function() {
             // localStorage.clear();
-            
             const foodItems = document.querySelectorAll('.food-item');
             let order = JSON.parse(localStorage.getItem('order')) || [];
             let counter = 1;
+            const counterDisplay = document.getElementById('counterDisplay');
+            const decreaseBtn = document.getElementById('decreaseBtn');
+            const increaseBtn = document.getElementById('increaseBtn');
+            const closeBtn = document.querySelector('.close');
+            const confirmBtn = document.querySelector('.confirm');
+            let id;
             function updateFoodBorders() {
                 const orderedItems = JSON.parse(localStorage.getItem('order')) || [];
                 
@@ -156,6 +161,7 @@
                     }
                 });
             }
+            
             updateFoodBorders();
             function updateCounter() {
                 counterDisplay.textContent = counter;
@@ -166,11 +172,12 @@
             });
             foodItems.forEach(function(item) {
                 item.addEventListener('click', function() {
-                    
+                    counter = 1;
+                    updateCounter();
                     const name = this.getAttribute('data-name');
                     const price = this.getAttribute('data-price');
                     const imgPath = this.getAttribute('data-img');
-                    const id = this.getAttribute('data-id');
+                    id = this.getAttribute('data-id');
                     const formattedPrice = parseFloat(price).toLocaleString('id-ID');
                     
                     document.getElementById('modalFoodName').textContent = name;
@@ -186,35 +193,35 @@
                     myModal.show();
 
                     const confirmBtn = document.querySelector('.confirm');
-                    confirmBtn.addEventListener('click', function(){
-                        const quantity = parseInt(document.getElementById('counterDisplay').textContent)
-                        const existingItemIndex = order.findIndex(item => item.name === name);
-                        if (existingItemIndex !== -1) {
-                            order[existingItemIndex].quantity = quantity;
-                        } else{
-                            const foodItem = {
-                                id: item.getAttribute('data-id'), 
-                                name: name,
-                                price: price,
-                                quantity: quantity,
-                                imgPath: imgPath
-                            };
-                            order.push(foodItem);
-                        }
-                        localStorage.setItem('order', JSON.stringify(order));
-                        console.log(order); 
-                        counter = 1;
-                        updateCounter();
-                        updateFoodBorders();
-                    })
+                    
                 });
             });
-
-            const counterDisplay = document.getElementById('counterDisplay');
-            const decreaseBtn = document.getElementById('decreaseBtn');
-            const increaseBtn = document.getElementById('increaseBtn');
-            const closeBtn = document.querySelector('.close');
-            
+            confirmBtn.addEventListener('click', function() {
+                const quantity = parseInt(document.getElementById('counterDisplay').textContent);
+                const foodItem = document.querySelector('.food-item[data-id="' + id + '"]');
+                if (foodItem) {
+                    const id = foodItem.getAttribute('data-id');
+                    const name = foodItem.getAttribute('data-name');
+                    const price = foodItem.getAttribute('data-price');
+                    const imgPath = foodItem.getAttribute('data-img');
+                    
+                    const existingItemIndex = order.findIndex(item => item.id === id);
+                    if (existingItemIndex !== -1) {
+                        order[existingItemIndex].quantity = quantity;
+                    } else {
+                        const newItem = {
+                            id: id,
+                            name: name,
+                            price: price,
+                            quantity: quantity,
+                            imgPath: imgPath
+                        };
+                        order.push(newItem);
+                    }
+                    localStorage.setItem('order', JSON.stringify(order));
+                    updateFoodBorders();
+                }
+            });
             counterDisplay.textContent = counter;
             
             decreaseBtn.addEventListener('click', function() {
