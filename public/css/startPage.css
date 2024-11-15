@@ -9,8 +9,10 @@
     background-color: white;
     border-radius: 35px;
     max-width: 98vw;
-    height: 100vh;
-    overflow: hidden;
+    height: calc(100vh - 3rem);
+    overflow: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 .base-buttons {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Food;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class PageController extends Controller
 {
@@ -23,9 +24,10 @@ class PageController extends Controller
     
     }
     public function showBasedCategory(Category $cat){
+        Paginator::useBootstrapFive();
         $categories = Category::with('foods')->get();
-        $cat ->load('foods');
-        return view('mainMenu', compact('categories', 'cat'));
+        $foods = $cat->foods()->paginate(2);
+        return view('mainMenu', compact('categories', 'cat', 'foods'));
     }
 #end-main-menu
     public function showCart(){
