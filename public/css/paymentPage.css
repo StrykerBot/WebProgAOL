@@ -66,6 +66,18 @@
     padding-left: 2vw;
     font-size: 2vw;
     font-family: "Poppins", sans-serif;
+    justify-content: space-between;
+    width: 100%;
+    display: flex;
+}
+
+.payment-amount{
+    color: black;
+    justify-content: flex-end;
+    font-size: 2vw;
+    font-family: "Poppins", sans-serif;
+    justify-content: flex-end;
+    margin-left: auto;
 }
 
 .payment-subbutton{

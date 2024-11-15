@@ -38,17 +38,25 @@
             </div>
             <div class="col">
                 <div class="row" style="padding-left: 15%;">
-                    <span class="payment-subtext">Sub total:</span>
-                    <span class="payment-subtext">Tax & Service:</span>
-                    <span class="payment-subtext">Discount:</span>
-                    <span class="payment-subtext">_______________________</span>
-                    <span class="payment-subtext" style="padding-top: 2%;">Total:</span>
+                    <span class="payment-subtext">Sub total:
+                        <span class="payment-amount" id="total-price"></span>
+                    </span>
+                    <span class="payment-subtext">Tax & Services:
+                        <span class="payment-aount" id="tax"></span>
+                    </span>
+                    <span class="payment-subtext">Discount:
+                        <span class="payment-amount" id="discount"></span>
+                    </span>
+                    <span class="payment-subtext">_________________________</span>
+                    <span class="payment-subtext" style="padding-top: 2%;">Total:
+                        <span class="payment-amount" id="final-price"></span>
+                    </span>
                     <div class="col-auto w-100 justify-content-center align-items-center pt-3">
                         <div class="row m-3 justify-content-center align-items-center">
                             <button class="payment-subbutton" id="pay-button" disabled>Pay</button>
                         </div>
                         <div class="row m-3 justify-content-center align-items-center">
-                            <button class="payment-subbutton"><a href="/cart" class="text-decoration-none" style="color: white;">Cancel</a></button>
+                            <button class="payment-subbutton" onclick="window.location.href='/cart';">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -79,6 +87,24 @@
     <script src="{{asset('bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            let cart = JSON.parse(localStorage.getItem('order')) || [];
+            const totalPriceElement = document.getElementById('total-price');
+            const taxElement = document.getElementById('tax');
+            const discountElement = document.getElementById('discount');
+            const finalPriceElement = document.getElementById('final-price');
+
+            function updateSummary() {
+                let totalPrice = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+                totalPriceElement.textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+                let taxes = totalPrice*0.11;
+                totalPrice += taxes;
+                let discount = totalPrice * 0.1;
+                totalPrice -= discount;
+                taxElement.textContent = `Rp ${taxes.toLocaleString('id-ID')}`;
+                discountElement.textContent = `Rp ${discount.toLocaleString('id-ID')}`;
+                finalPriceElement.textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;
+            }
+            updateSummary();
             const buttons = document.querySelectorAll('#button-group .payment-button');
             const payButton = document.getElementById('pay-button');
             let selectedMethod = null;

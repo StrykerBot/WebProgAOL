@@ -22,7 +22,7 @@
                 <img src="{{asset('storage/img/CheckMark.png')}}" alt="img">
             </div>
             <div class="row pt-4">
-                <button class="back-button"><a href="/start" class="text-decoration-none" style="color: white;">Back to menu</a></button>
+                <button class="back-button" onclick="window.location.href='/start';">Back to menu</button>
             </div>
         </div>
     </div>
