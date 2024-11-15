@@ -5,68 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset('css/cart.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/cart.css')}}">
 </head>
 <body>
-{{-- blm gw connect ke database, nunggu main menu dulu biar sekalian bs connectin --}}
+
 <div class="cart-container">
-    <h3 class="text-center">Daftar Pesanan</h3>
-    <div class="cart-item">
-        <img src="{{asset('storage/img/Nasi Goreng.jpeg')}}" alt="Sate Ayam">
-        <div class="item-info">
-            <strong>Sate Ayam (10pcs)</strong><br>
-            <small class="text-muted">Tidak pedas</small>
-        </div>
-        <div class="item-quantity">
-            <button class="btn btn-outline-secondary btn-sm">-</button>
-            <input type="text" class="form-control form-control-sm text-center mx-1" style="width: 40px;" value="0">
-            <button class="btn btn-outline-secondary btn-sm">+</button>
-        </div>
-    </div>
-    <div class="cart-item">
-        <img src="{{asset('storage/img/Nasi Goreng.jpeg')}}" alt="Nasi Goreng">
-        <div class="item-info">
-            <strong>Nasi Goreng</strong><br>
-            <small class="text-muted">Extra bawang</small>
-        </div>
-        <div class="item-quantity">
-            <button class="btn btn-outline-secondary btn-sm">-</button>
-            <input type="text" class="form-control form-control-sm text-center mx-1" style="width: 40px;" value="0">
-            <button class="btn btn-outline-secondary btn-sm">+</button>
-        </div>
-    </div>
-    <div class="cart-item">
-        <img src="{{asset('storage/img/Nasi Goreng.jpeg')}}" alt="Ayam Geprek">
-        <div class="item-info">
-            <strong>Ayam Geprek</strong><br>
-            <small class="text-muted">Level 30</small>
-        </div>
-        <div class="item-quantity">
-            <button class="btn btn-outline-secondary btn-sm">-</button>
-            <input type="text" class="form-control form-control-sm text-center mx-1" style="width: 40px;" value="0">
-            <button class="btn btn-outline-secondary btn-sm">+</button>
-        </div>
-    </div>
-    <div class="cart-item">
-        <img src="{{asset('storage/img/Nasi Goreng.jpeg')}}" alt="Pempek Palembang">
-        <div class="item-info">
-            <strong>Pempek Palembang</strong><br>
-            <small class="text-muted">Tidak pakai timun</small>
-        </div>
-        <div class="item-quantity">
-            <button class="btn btn-outline-secondary btn-sm">-</button>
-            <input type="text" class="form-control form-control-sm text-center mx-1" style="width: 40px;" value="0">
-            <button class="btn btn-outline-secondary btn-sm">+</button>
-        </div>
+    <a href="/mainmenu" class="back-button">&larr;</a>
+    <h3>Daftar Pesanan</h3>
+
+    <div id="cart-items-container">
+
     </div>
     
     <div class="total-container">
-        <p>Total Items: 5</p>
-        <p>Total Price: Rp 300.000,00</p>
-        <button class="btn pay-button w-100">Pay</button>
+        <div class="summary">
+            <p id="total-items">Total Items: 0</p>
+            <p id="total-price">Total Price: Rp 0</p>
+        </div>
+        <a href="{{ url('/payment') }}" class="pay-button w-100">Payment</a>        
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Retrieve the cart data from localStorage
+    let cart = JSON.parse(localStorage.getItem('order')) || [];
+    
+    const cartItemsContainer = document.getElementById('cart-items-container');
+    const totalItemsElement = document.getElementById('total-items');
+    const totalPriceElement = document.getElementById('total-price');
+
+    // Function to render the cart
+    function renderCart() {
+        cartItemsContainer.innerHTML = ''; // Clear the cart container
+        
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p class="text-center">Your cart is empty.</p>';
+            updateSummary();
+            return;
+        }
+
+        cart.forEach((item, index) => {
+            const itemHtml = `
+                <div class="cart-item">
+                    <img src="${item.imgPath}" alt="${item.name}">
+                    <div class="item-info">
+                        <strong>${item.name}</strong><br>
+                        <small class="text-muted">
+                            <input type="text" class="form-control form-control-sm note-input" placeholder="Add notes" value="${item.note || ''}" data-index="${index}">
+                        </small>
+                    </div>
+                    <div class="item-quantity">
+                        <button class="decrease-btn" data-index="${index}">-</button>
+                        <input type="text" class="quantity-input" value="${item.quantity}" data-index="${index}">
+                        <button class="increase-btn" data-index="${index}">+</button>
+                    </div>
+                    <button class="delete-btn" data-index="${index}">&times;</button>
+                </div>
+            `;
+            cartItemsContainer.insertAdjacentHTML('beforeend', itemHtml);
+        });
+
+        updateSummary();
+    }
+
+    // Function to update the summary
+    function updateSummary() {
+        const totalItems = cart.reduce((sum, item) => sum + parseInt(item.quantity), 0);
+        const totalPrice = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
+
+        totalItemsElement.textContent = `Total Items: ${totalItems}`;
+        totalPriceElement.textContent = `Total Price: Rp ${totalPrice.toLocaleString('id-ID')}`;
+    }
+
+    // Function to update the local storage
+    function updateLocalStorage() {
+        localStorage.setItem('order', JSON.stringify(cart));
+    }
+
+    // Event listeners for actions
+    cartItemsContainer.addEventListener('click', function(event) {
+        const index = event.target.dataset.index;
+
+        if (event.target.classList.contains('increase-btn')) {
+            cart[index].quantity++;
+            updateLocalStorage();
+            renderCart();
+        } else if (event.target.classList.contains('decrease-btn')) {
+            if (cart[index].quantity > 1) {
+                cart[index].quantity--;
+                updateLocalStorage();
+                renderCart();
+            }
+        } else if (event.target.classList.contains('delete-btn')) {
+            cart.splice(index, 1);
+            updateLocalStorage();
+            renderCart();
+        }
+    });
+
+    cartItemsContainer.addEventListener('input', function(event) {
+        const index = event.target.dataset.index;
+
+        if (event.target.classList.contains('quantity-input')) {
+            const newQuantity = parseInt(event.target.value);
+            if (newQuantity > 0) {
+                cart[index].quantity = newQuantity;
+                updateLocalStorage();
+                renderCart();
+            }
+        } else if (event.target.classList.contains('note-input')) {
+            const note = event.target.value;
+            cart[index].note = note;
+            updateLocalStorage();
+        }
+    });
+
+    // Initial render of the cart
+    renderCart();
+});
+</script>
 </body>
 </html>
