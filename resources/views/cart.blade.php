@@ -22,7 +22,8 @@
             <p id="total-items">Total Items: 0</p>
             <p id="total-price">Total Price: Rp 0</p>
         </div>
-        <a href="{{ url('/payment') }}" class="pay-button w-100">Payment</a>        
+        <button id="pay-button" type="button" class="pay-button w-100" disabled>Payment</button>
+        {{-- <a href="{{ url('/payment') }}" id="pay-button" class="pay-button w-100" disabled>Payment</a> --}}
     </div>
 </div>
 
@@ -35,14 +36,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const cartItemsContainer = document.getElementById('cart-items-container');
     const totalItemsElement = document.getElementById('total-items');
     const totalPriceElement = document.getElementById('total-price');
+    const payButton = document.getElementById('pay-button'); // Payment button
 
     // Function to render the cart
     function renderCart() {
         cartItemsContainer.innerHTML = ''; // Clear the cart container
         
         if (cart.length === 0) {
+            console.log('Cart is empty, disabling payment button.');
+
             cartItemsContainer.innerHTML = '<p class="text-center">Your cart is empty.</p>';
             updateSummary();
+
+            // Disable the payment button if cart is empty
+            payButton.setAttribute('disabled', 'true');
+            payButton.onclick = null; // Remove any previous click handler
             return;
         }
 
@@ -68,6 +76,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         updateSummary();
+
+        // Enable the payment button if cart has items
+        payButton.removeAttribute('disabled');
+        payButton.onclick = function() {
+            window.location.href = '/payment'; // Redirect to payment page when clicked
+        };
     }
 
     // Function to update the summary
@@ -125,6 +139,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial render of the cart
     renderCart();
 });
+
+
+
 </script>
 </body>
 </html>
