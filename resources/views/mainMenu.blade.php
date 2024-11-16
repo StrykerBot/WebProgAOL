@@ -42,8 +42,8 @@
                             data-img="{{ asset('storage/img/' . $food->img_path) }}"
                             data-id = "{{$food->id}}"
                             data-desc = "{{$food->description}}"
-                            style="cursor:pointer;">
-                            <div class="card border-1" style="border-radius: 15px;">
+                            >
+                            <div class="card border-1" style="border-radius: 15px; cursor:pointer;">
                                 <div class="card-body">
                                     <div style="height:150px; width:100%; ">
                                         <img src="{{ asset('storage/img/' . $food->img_path) }}" 
