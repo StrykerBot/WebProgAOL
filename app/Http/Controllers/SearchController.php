@@ -12,6 +12,6 @@ class SearchController extends Controller
         $keyword = $request->input('query');
         $foods = Food::where('name', 'LIKE', '%' . $keyword . '%')->get();
 
-        return view('search_results', ['foods' => $foods]);
+        return view('search_results', ['foods' => $foods, 'keyword' => $keyword]);
     }
 }
