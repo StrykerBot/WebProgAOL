@@ -41,6 +41,7 @@
                             data-price="{{$food->price}}" 
                             data-img="{{ asset('storage/img/' . $food->img_path) }}"
                             data-id = "{{$food->id}}"
+                            data-desc = "{{$food->description}}"
                             style="cursor:pointer;">
                             <div class="card border-1" style="border-radius: 15px;">
                                 <div class="card-body">
@@ -82,7 +83,7 @@
                                     <h5 class="mt-0" id="modalFoodPrice"></h5>
                                 </div>
                                 <div class="col-6">
-                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga, minima!
+                                    <p id="modalFoodDesc">
 
                                     </p>
                                 </div>
@@ -144,11 +145,13 @@
                     const price = this.getAttribute('data-price');
                     const imgPath = this.getAttribute('data-img');
                     id = this.getAttribute('data-id');
+                    const desc = this.getAttribute('data-desc');
                     const formattedPrice = parseFloat(price).toLocaleString('id-ID');
                     
                     document.getElementById('modalFoodName').textContent = name;
                     document.getElementById('modalFoodPrice').textContent = 'Rp. ' + formattedPrice;
                     document.getElementById('modalFoodImage').src = imgPath;
+                    document.getElementById('modalFoodDesc').textContent = desc;
                     const orderedItems = JSON.parse(localStorage.getItem('order')) || [];
                     const findItem = orderedItems.find(order => order.id === id)
                     if (findItem) {

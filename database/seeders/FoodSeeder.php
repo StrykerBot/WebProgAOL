@@ -20,7 +20,8 @@ class FoodSeeder extends Seeder
            Food::insert([
                 'name'=>$foods[$i],
                 'price'=>rand(30000, 100000),
-                'img_path'=>$foods[$i].'.jpeg'
+                'img_path'=>$foods[$i].'.jpeg',
+                'description' => fake()->sentence(10)
             ]);
         }
     }
