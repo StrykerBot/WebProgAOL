@@ -34,7 +34,7 @@
             </form> --}}
 
             <div class="d-flex">
-
+                
                 <form class="d-flex" role="search" action="{{ route('search') }}" method="GET">
                     <div class="position-relative d-inline-flex">
                         <input class="form-control me-2 ps-5" style="background-color: rgba(40, 216, 163, 0.24); border:none; border-radius:10px;" name="query" type="search" placeholder="Search" aria-label="Search" required>
@@ -42,10 +42,12 @@
                     </div>
                     {{-- <button class="btn btn-outline-success" type="submit">Search</button> --}}
                 </form>
-                    
-                <button class="btn-sm border-0 px-3 ms-3 cart" style="background-color: rgba(40, 216, 163, 0.24);" type="submit">
-                    <i class="bi bi-cart-fill" style="color: #86C87E; font-size: 1.7rem;"></i>
-                </button>
+
+                <form action="{{ route('cart') }}" method="GET">
+                    <button class="btn-sm border-0 px-3 ms-3 cart" style="background-color: rgba(40, 216, 163, 0.24);" type="submit">
+                        <i class="bi bi-cart-fill" style="color: #86C87E; font-size: 1.7rem;"></i>
+                    </button>
+                </form>
 
             </div>
             

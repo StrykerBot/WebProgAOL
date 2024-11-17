@@ -14,8 +14,8 @@ Route::get('/start', [PageController::class, 'showStartPage']);
 Route::get('/home', [PageController::class, 'showHomePage']);
 Route::get('/mainmenu/{cat:name}',[PageController::class, 'showBasedCategory'])->name('mainmenu.category');
 Route::get('/mainmenu', [PageController::class, 'showMainMenu']);
-Route::get('/cart', [PageController::class, 'showCart']);
+Route::get('/cart', [PageController::class, 'showCart'])->name('cart');
 Route::get('/payment', [PageController::class, 'showPayment']);
-Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/search', [PageController::class, 'search'])->name('search');
 
 Route::get('/paySuccess', [PageController::class, 'showPaySuccess']);
