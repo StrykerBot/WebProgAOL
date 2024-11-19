@@ -16,18 +16,10 @@ class PageController extends Controller
     public function showHomePage(){
         return view('homePage');
     }
-#main-menu
-    public function showMainMenu(){
-        $categories = Category::with('foods')->get();
-        // $firstCategoryName = $categories->first()->name;
-        return view('mainMenu', compact('categories'));
-    
-    }
+
     public function showBasedCategory(Category $cat){
-        Paginator::useBootstrapFive();
         $categories = Category::with('foods')->get();
-        $foods = $cat->foods()->paginate(2);
-        return view('mainMenu', compact('categories', 'cat', 'foods'));
+        return view('mainMenu', compact('categories', 'cat'));
     }
     public function filterFoods(Request $request)
     {
@@ -36,18 +28,14 @@ class PageController extends Controller
         $perPage = $request->input('perPage', 12);
         $page = $request->input('page', 1);
 
-        // Start building the query on the Food model
         $query = Food::query();
 
-        // Filter by category if provided
         if ($categoryName && $categoryName !== 'all') {
             $category = Category::where('name', $categoryName)->first();
 
             if ($category) {
-                // Filter by category
                 $query = $category->foods();
             } else {
-                // If no category found, return empty result
                 $query = collect([])->paginate($perPage, ['*'], 'page', $page);
             }
         }
@@ -55,16 +43,13 @@ class PageController extends Controller
         if($searchTerm){
             $query->where('name', 'LIKE', '%' . $searchTerm . '%');
         }
-        // Apply pagination to the query
         $foods = $query->paginate($perPage, ['*'], 'page', $page);
 
-        // Transform the results to include the full image path
         $foods->getCollection()->transform(function($food) {
             $food->img_path = asset('storage/img/' . $food->img_path); 
             return $food;
         });
 
-        // Return the response with pagination data and food items
         return response()->json([
             'current_page' => $foods->currentPage(),
             'data' => $foods->items(),
