@@ -53,7 +53,7 @@
                     </span>
                     <div class="col-auto w-100 justify-content-center align-items-center pt-3">
                         <div class="row m-3 justify-content-center align-items-center">
-                            <button class="payment-subbutton" id="pay-button" disabled>Pay</button>
+                            <button class="payment-subbutton" id="pay-button" disabled style="cursor:not-allowed">Pay</button>
                         </div>
                         <div class="row m-3 justify-content-center align-items-center">
                             <button class="payment-subbutton" onclick="window.location.href='/cart';">Cancel</button>
@@ -119,6 +119,7 @@
 
                     if(selectedMethod){
                         payButton.disabled = false;
+                        payButton.style.cursor = 'pointer';
                     }
                 });
             });
