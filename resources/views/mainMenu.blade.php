@@ -120,7 +120,14 @@
             const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
             let selectedCategory = 'all';  
             let searchNow = '';
-            console.log(toastBootstrap)
+            if(order.length){
+                document.querySelector('.cartNum').style.display = "flex";
+                document.querySelector('.cartNum').textContent = order.length
+            }
+            else{
+                document.querySelector('.cartNum').style.display = "none";
+                console.log('a');
+            }
 
             function updateCounter() {
                 counterDisplay.textContent = counter;
@@ -313,6 +320,8 @@
                     updateFoodBorders();
                     console.log("Toast is about to show!");
                     toastBootstrap.show()
+                    document.querySelector('.cartNum').style.display = "flex";
+                    document.querySelector('.cartNum').textContent = order.length
                 }
             });
 

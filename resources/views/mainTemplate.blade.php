@@ -33,9 +33,9 @@
                     <button class="btn-sm border-0 px-3 ms-3 cart" style="background-color: rgba(40, 216, 163, 0.24); border-radius: 15px;" type="submit">
                         <i class="bi bi-cart-fill" style="color: #86C87E; font-size: 1.7rem;"></i>
                     </button>
-                    <div class="position-absolute d-flex justify-content-center align-items-center" 
-                        style="width:25px; height:25px; border-radius:50%; background-color: #86C87E; top:-5px; right:-5px; color:white;">
-                        4
+                    <div class="position-absolute justify-content-center align-items-center cartNum" 
+                        style="width:25px; height:25px; border-radius:50%; background-color: #86C87E; top:-5px; right:-5px; color:white; font-size:13px;">
+                        
                     </div>
                 </div>
                 
