@@ -45,7 +45,7 @@
                         <span class="payment-aount" id="tax"></span>
                     </span>
                     <span class="payment-subtext">Discount:
-                        <span class="payment-amount" id="discount"></span>
+                        <span class="payment-amount disc" id="discount"></span>
                     </span>
                     <span class="payment-subtext">_________________________</span>
                     <span class="payment-subtext" style="padding-top: 2%;">Total:
@@ -92,32 +92,14 @@
             const taxElement = document.getElementById('tax');
             const discountElement = document.getElementById('discount');
             const finalPriceElement = document.getElementById('final-price');
-            const currentDate = new Date();
             function updateSummary() {
                 let totalPrice = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
-                totalPriceElement.textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;
-                let taxes = totalPrice*0.11;
+                let totalOriPrice = cart.reduce((sum, item) => sum + (parseFloat(item.oriPrice) * item.quantity), 0);
+                console.log(totalOriPrice);
+                totalPriceElement.textContent = `Rp ${totalOriPrice.toLocaleString('id-ID')}`;
+                let discount = Math.floor(totalOriPrice-totalPrice);
+                let taxes = Math.floor(totalPrice*0.11);
                 totalPrice += taxes;
-
-                // console.log(currentDate);
-                let startDisc = '20:00:00';
-                let startDate = new Date(currentDate.getTime());
-                startDate.setHours(startDisc.split(":")[0]);
-                startDate.setMinutes(startDisc.split(":")[1]);
-                startDate.setSeconds(startDisc.split(":")[2]);
-                let endDisc = '24:00:00';
-                let endDate = new Date(currentDate.getTime());
-                endDate.setHours(endDisc.split(":")[0]);
-                endDate.setMinutes(endDisc.split(":")[1]);
-                endDate.setSeconds(endDisc.split(":")[2]);
-                valid = startDate < currentDate && endDate > currentDate
-                let discount = 0;
-                if(valid){
-                    discount = totalPrice * 0.3;
-                }
-
-                // console.log(discount)
-                totalPrice -= discount;
                 taxElement.textContent = `Rp ${taxes.toLocaleString('id-ID')}`;
                 discountElement.textContent = `Rp ${discount.toLocaleString('id-ID')}`;
                 finalPriceElement.textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;
