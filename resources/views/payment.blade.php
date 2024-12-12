@@ -8,11 +8,6 @@
 </head>
 <body style="background-color: #E5E5E5; overflow:hidden;">
     <div class="container-fluid main-background">
-        <!-- <div class="row p-4">
-            <div class="arrow mx-2">
-                <img src="{{url('storage/img/Arrow3.png')}}" alt="img">
-            </div>
-        </div> -->
         <div class="row px-5" style="margin-top: 5%; margin-bottom: 1%;">
             <h1 class="paymentText">Choose</h1>
             <h1 class="paymentText">Payment Method</h1>
@@ -64,7 +59,6 @@
         </div>
     </div>
 
-    <!-- Modal for payment steps, after choosing payment method -->
     <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -73,7 +67,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modal-body-content">
-                    <!-- Dynamic content for payment steps will go here -->
                     <p id="payment-steps">Select a payment method to view the steps.</p>
                 </div>
                 <div class="modal-footer">
