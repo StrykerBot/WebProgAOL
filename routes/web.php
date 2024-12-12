@@ -5,11 +5,7 @@ use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Food;
 
-Route::get('/', function () {
-    $foods = Food::with('categories')->get();
-    return view('welcome', compact('foods'));
-});
-
+Route::get('/', [PageController::class, 'showStartPage']);
 Route::get('/start', [PageController::class, 'showStartPage']);
 Route::get('/home', [PageController::class, 'showHomePage']);
 Route::get('/mainmenu', [PageController::class, 'showBasedCategory'])->name('mainmenu');

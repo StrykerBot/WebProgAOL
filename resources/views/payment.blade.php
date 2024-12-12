@@ -92,13 +92,31 @@
             const taxElement = document.getElementById('tax');
             const discountElement = document.getElementById('discount');
             const finalPriceElement = document.getElementById('final-price');
-
+            const currentDate = new Date();
             function updateSummary() {
                 let totalPrice = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
                 totalPriceElement.textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;
                 let taxes = totalPrice*0.11;
                 totalPrice += taxes;
-                let discount = totalPrice * 0.1;
+
+                // console.log(currentDate);
+                let startDisc = '20:00:00';
+                let startDate = new Date(currentDate.getTime());
+                startDate.setHours(startDisc.split(":")[0]);
+                startDate.setMinutes(startDisc.split(":")[1]);
+                startDate.setSeconds(startDisc.split(":")[2]);
+                let endDisc = '24:00:00';
+                let endDate = new Date(currentDate.getTime());
+                endDate.setHours(endDisc.split(":")[0]);
+                endDate.setMinutes(endDisc.split(":")[1]);
+                endDate.setSeconds(endDisc.split(":")[2]);
+                valid = startDate < currentDate && endDate > currentDate
+                let discount = 0;
+                if(valid){
+                    discount = totalPrice * 0.3;
+                }
+
+                // console.log(discount)
                 totalPrice -= discount;
                 taxElement.textContent = `Rp ${taxes.toLocaleString('id-ID')}`;
                 discountElement.textContent = `Rp ${discount.toLocaleString('id-ID')}`;
