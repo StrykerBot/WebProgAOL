@@ -8,11 +8,6 @@
 </head>
 <body style="background-color: #E5E5E5; overflow:hidden;">
     <div class="container-fluid main-background">
-        <!-- <div class="row p-4">
-            <div class="arrow mx-2">
-                <img src="{{url('storage/img/Arrow3.png')}}" alt="img">
-            </div>
-        </div> -->
         <div class="row px-5" style="margin-top: 5%; margin-bottom: 1%;">
             <h1 class="paymentText">Choose</h1>
             <h1 class="paymentText">Payment Method</h1>
@@ -45,7 +40,7 @@
                         <span class="payment-aount" id="tax"></span>
                     </span>
                     <span class="payment-subtext">Discount:
-                        <span class="payment-amount" id="discount"></span>
+                        <span class="payment-amount disc" id="discount"></span>
                     </span>
                     <span class="payment-subtext">_________________________</span>
                     <span class="payment-subtext" style="padding-top: 2%;">Total:
@@ -64,7 +59,6 @@
         </div>
     </div>
 
-    <!-- Modal for payment steps, after choosing payment method -->
     <div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -73,7 +67,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modal-body-content">
-                    <!-- Dynamic content for payment steps will go here -->
                     <p id="payment-steps">Select a payment method to view the steps.</p>
                 </div>
                 <div class="modal-footer">
@@ -92,32 +85,14 @@
             const taxElement = document.getElementById('tax');
             const discountElement = document.getElementById('discount');
             const finalPriceElement = document.getElementById('final-price');
-            const currentDate = new Date();
             function updateSummary() {
                 let totalPrice = cart.reduce((sum, item) => sum + (parseFloat(item.price) * item.quantity), 0);
-                totalPriceElement.textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;
-                let taxes = totalPrice*0.11;
+                let totalOriPrice = cart.reduce((sum, item) => sum + (parseFloat(item.oriPrice) * item.quantity), 0);
+                console.log(totalOriPrice);
+                totalPriceElement.textContent = `Rp ${totalOriPrice.toLocaleString('id-ID')}`;
+                let discount = Math.floor(totalOriPrice-totalPrice);
+                let taxes = Math.floor(totalPrice*0.11);
                 totalPrice += taxes;
-
-                // console.log(currentDate);
-                let startDisc = '20:00:00';
-                let startDate = new Date(currentDate.getTime());
-                startDate.setHours(startDisc.split(":")[0]);
-                startDate.setMinutes(startDisc.split(":")[1]);
-                startDate.setSeconds(startDisc.split(":")[2]);
-                let endDisc = '24:00:00';
-                let endDate = new Date(currentDate.getTime());
-                endDate.setHours(endDisc.split(":")[0]);
-                endDate.setMinutes(endDisc.split(":")[1]);
-                endDate.setSeconds(endDisc.split(":")[2]);
-                valid = startDate < currentDate && endDate > currentDate
-                let discount = 0;
-                if(valid){
-                    discount = totalPrice * 0.3;
-                }
-
-                // console.log(discount)
-                totalPrice -= discount;
                 taxElement.textContent = `Rp ${taxes.toLocaleString('id-ID')}`;
                 discountElement.textContent = `Rp ${discount.toLocaleString('id-ID')}`;
                 finalPriceElement.textContent = `Rp ${totalPrice.toLocaleString('id-ID')}`;

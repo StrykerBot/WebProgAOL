@@ -116,8 +116,9 @@
             const confirmBtn = document.querySelector('.confirm');
             const paginationContainer = document.querySelector('.pagination-controls');
             const categoryButtons = document.querySelectorAll('.categories');
-            const toastLiveExample = document.getElementById('liveToast')
-            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+            const toastLiveExample = document.getElementById('liveToast');
+            const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+            const currentDate = new Date();
             let selectedCategory = 'all';  
             let searchNow = '';
             if(order.length){
@@ -175,21 +176,49 @@
                     foodItem.setAttribute('data-img', food.img_path);
                     foodItem.setAttribute('data-id', food.id);
                     foodItem.setAttribute('data-desc', food.description);
+                    foodItem.setAttribute('ori-price', food.price);
 
-                    foodItem.innerHTML = `
-                        <div class="card border-1" style="border-radius: 15px; cursor:pointer;">
-                            <div class="card-body">
-                                <div style="height:150px; width:100%;">
-                                    <img src="${food.img_path}" alt="Uploaded Image" class="img-fluid" 
-                                        style="object-fit: cover; height: 100%; width: 100%; border-radius:10px;">
+                    let startDisc = '12:00:00';
+                    let startDate = new Date(currentDate.getTime());
+                    startDate.setHours(startDisc.split(":")[0]);
+                    startDate.setMinutes(startDisc.split(":")[1]);
+                    startDate.setSeconds(startDisc.split(":")[2]);
+                    let endDisc = '24:00:00';
+                    let endDate = new Date(currentDate.getTime());
+                    endDate.setHours(endDisc.split(":")[0]);
+                    endDate.setMinutes(endDisc.split(":")[1]);
+                    endDate.setSeconds(endDisc.split(":")[2]);
+                    valid = startDate < currentDate && endDate > currentDate;
+                    let updatedPrice = Math.floor(food.price * 0.7);
+                    if(valid){
+                        foodItem.setAttribute('data-price', updatedPrice);
+                        foodItem.innerHTML = `
+                            <div class="card border-1" style="border-radius: 15px; cursor:pointer;">
+                                <div class="card-body">
+                                    <div style="height:150px; width:100%;">
+                                        <img src="${food.img_path}" alt="Uploaded Image" class="img-fluid" 
+                                            style="object-fit: cover; height: 100%; width: 100%; border-radius:10px;">
+                                    </div>
+                                    <h5 class="mt-2" style="font-weight:600;">${food.name}</h5>
+                                    <h6 style="font-weight:500;">Rp. <span style="font-weight:500;text-decoration:line-through"> ${food.price.toLocaleString()}</span><span style="font-weight:500;text-decoration:none"> ${updatedPrice.toLocaleString()}</span></h6>
                                 </div>
-                                <h5 class="mt-2" style="font-weight:600;">${food.name}</h5>
-                                <h6 style="font-weight:500;">Rp. ${food.price.toLocaleString()}</h6>
                             </div>
-                        </div>
-                    `;
-
-                    
+                        `;
+                    }
+                    else{
+                        foodItem.innerHTML = `
+                            <div class="card border-1" style="border-radius: 15px; cursor:pointer;">
+                                <div class="card-body">
+                                    <div style="height:150px; width:100%;">
+                                        <img src="${food.img_path}" alt="Uploaded Image" class="img-fluid" 
+                                            style="object-fit: cover; height: 100%; width: 100%; border-radius:10px;">
+                                    </div>
+                                    <h5 class="mt-2" style="font-weight:600;">${food.name}</h5>
+                                    <h6 style="font-weight:500;">Rp. ${food.price.toLocaleString()}</h6>
+                                </div>
+                            </div>
+                        `;
+                    }
                     foodItem.addEventListener('click', function () {
                         counter = 1;
                         updateCounter();
@@ -301,6 +330,7 @@
                     const name = foodItem.getAttribute('data-name');
                     const price = foodItem.getAttribute('data-price');
                     const imgPath = foodItem.getAttribute('data-img');
+                    const oriPrice = foodItem.getAttribute('ori-price');
 
                     const existingItemIndex = order.findIndex(item => item.id === id);
                     if (existingItemIndex !== -1) {
@@ -311,7 +341,8 @@
                             name: name,
                             price: price,
                             quantity: quantity,
-                            imgPath: imgPath
+                            imgPath: imgPath,
+                            oriPrice: oriPrice
                         };
                         order.push(newItem);
                     }
