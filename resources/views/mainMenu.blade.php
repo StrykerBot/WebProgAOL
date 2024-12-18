@@ -136,7 +136,7 @@
 
             
             function fetchFoods(category = 'all', page = 1, searchTerm = '') {
-                fetch("{{ route('filter.foods') }}", {
+                fetch("https://webprogaol-production.up.railway.app/mainmenu", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
