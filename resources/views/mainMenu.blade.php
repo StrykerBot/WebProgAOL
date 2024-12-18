@@ -14,16 +14,18 @@
         <div class="container-xxl d-flex justify-content-center align-items-center mb-3">
             <div class="rounded-pill" style="background-color: rgba(40, 216, 163, 0.24);">
 
-            <button class="btn rounded-pill categories" value="all">All</button>
-            @foreach($categories as $index => $category)
-                <button class="btn rounded-pill categories shadow-none" value="{{$category->name}}">
-                    {{ $category->name }}
-                </button>
-            @endforeach
+                <button class="btn rounded-pill categories" value="all">All</button>
+                @foreach($categories as $index => $category)
+                    <button class="btn rounded-pill categories shadow-none" value="{{$category->name}}">
+                        {{ $category->name }}
+                    </button>
+                @endforeach
             </div>
         </div>
     </section>
-    
+    <!-- <div class="d-flex justify-content-center align-items-center mb-3">
+        Loading
+    </div> -->
     <!-- List Food -->
     <section class="listFood"> 
         <div class="container-sm border border-2 p-4 mb-3" style="border-radius:30px;">
@@ -136,7 +138,7 @@
 
             
             function fetchFoods(category = 'all', page = 1, searchTerm = '') {
-                fetch("https://webprogaol-production.up.railway.app/filter-foods", {
+                fetch("/filter-foods", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
