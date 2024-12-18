@@ -57,7 +57,7 @@
 
 .payment-button.active-button{
     /* background-color: #28d8a3; */
-    border-color: #28d8a3;
+    border-color: #49c2ff;;
     border-width: 4px;
 }
 
@@ -81,7 +81,7 @@
 }
 
 .payment-subbutton{
-    background-color: #28d8a3;
+    background-color: #49c2ff;;
     color: white;
     font-family: "Poppins", sans-serif;
     font-weight: 700;

@@ -3,7 +3,7 @@
 @section('content')
     <!-- Banner  -->
     <section class="banner">
-        <div class="container-fluid d-flex justify-content-center align-items-center py-4 mb-3" style="background-color: rgba(40, 216, 163, 0.24);">
+        <div class="container-fluid d-flex justify-content-center align-items-center py-4 mb-3" style="background-color: #56c7ff;">
             <h1>Promotion Banner</h1>
         </div>
 
@@ -12,7 +12,7 @@
     <!-- Category Filter -->
     <section class="category">
         <div class="container-xxl d-flex justify-content-center align-items-center mb-3">
-            <div class="rounded-pill" style="background-color: rgba(40, 216, 163, 0.24);">
+            <div class="rounded-pill" style="background-color: #9fdfff;">
 
             <button class="btn rounded-pill categories" value="all">All</button>
             @foreach($categories as $index => $category)
@@ -40,7 +40,7 @@
     <!-- Toast -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" >
-            <div class="toast-body text-white d-flex align-items-center justify-content-center" style="background-color: #28D8A3; font-size: 1rem; padding: 20px;">
+            <div class="toast-body text-white d-flex align-items-center justify-content-center" style="background-color: #39c6fe; font-size: 1rem; padding: 20px;">
                 <i class="bi bi-check-lg me-2"></i>
                 Your Order is Successfully Placed!
             </div>
@@ -62,7 +62,7 @@
                     <div class="position-absolute bottom-0 start-0 container" 
                         style="background-color: rgba(0, 0, 0, 0.5); color: white; width:70%;">
                         <div class="row p-2" >
-                            <div class="col-6 d-flex justify-content-center flex-column" style="border:1px solid #28D8A3; border-radius:20px;">
+                            <div class="col-6 d-flex justify-content-center flex-column" style="border:1px solid #2edcf3; border-radius:20px;">
                                 <h3 id="modalFoodName"></h3>
                                 <h5 class="mt-0" id="modalFoodPrice"></h5>
                             </div>
@@ -77,11 +77,11 @@
                 </div>
                 <div class="container d-flex justify-content-center align-items-center">
     
-                    <button class="btn btn-lg fw-bold" id="decreaseBtn" style="padding: 10px 20px; font-size: 20px; border: none; background-color: rgba(40, 216, 163, 0.5);">-</button>
-                    <div class="px-5 mx-3" id="counterDisplay" style="border: 2px solid #28D8A3; border-radius: 15px; height: 50px; width: 50px; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; color: #333;">
+                    <button class="btn btn-lg fw-bold" id="decreaseBtn" style="padding: 10px 20px; font-size: 20px; border: none; background-color: #4cc8f9;">-</button>
+                    <div class="px-5 mx-3" id="counterDisplay" style="border: 2px solid #01A8E8; border-radius: 15px; height: 50px; width: 50px; display: flex; justify-content: center; align-items: center; font-size: 18px; font-weight: bold; color: #333;">
                             
                     </div>
-                    <button class="btn btn-lg fw-bold" id="increaseBtn" style="padding: 10px 20px; font-size: 20px; border: none; background-color: rgba(40, 216, 163, 0.5);">+</button>
+                    <button class="btn btn-lg fw-bold" id="increaseBtn" style="padding: 10px 20px; font-size: 20px; border: none; background-color: #4cc8f9;">+</button>
                 </div>
             </div>
         </div>
@@ -100,7 +100,7 @@
                     const foodId = item.getAttribute('data-id');
                     const card = item.querySelector('.card');
                     if (orderedItems.some(order => order.id === foodId)) {
-                        card.style.border = '2px solid #28D8A3';
+                        card.style.border = '2px solid #4cc8f9';
                     }
                 });
             }
@@ -136,7 +136,7 @@
 
             
             function fetchFoods(category = 'all', page = 1, searchTerm = '') {
-                fetch("https://webprogaol-production.up.railway.app/filter-foods", {
+                fetch("/filter-foods", {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -296,7 +296,7 @@
                 button.addEventListener('click', function () {
                     const category = this.value;
                     selectedCategory = category; 
-                    this.style.backgroundColor = '#28D8A3';
+                    this.style.backgroundColor = '#01A8E8';
                     categoryButtons.forEach(otherButton => {
                         if (otherButton !== this) {
                             otherButton.style.backgroundColor = '';

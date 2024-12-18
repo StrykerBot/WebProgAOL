@@ -40,7 +40,7 @@ h3 {
     margin-left: auto;
 }
 .item-quantity button {
-    background-color: #a8f1d1;
+    background-color: #49c2ff;
     border: none;
     font-size: 18px;
     font-weight: bold;
@@ -84,7 +84,7 @@ h3 {
 }
 .total-price {
     flex:3;
-    color: #28d8a3;
+    color: #00ebf3;
 }
 .summary{
     padding-right: 20px;
@@ -92,7 +92,7 @@ h3 {
 .pay-button {
     max-width: 140px;
     max-height: 80px;
-    background-color: #28d8a3;
+    background-color: #9fdfff;
     border: none;
     color: white;
     text-align: center;
@@ -107,7 +107,7 @@ h3 {
 
 }
 .pay-button:hover {
-    background-color: #20c393;
+    background-color: #49c2ff;
 }
 .delete-btn {
     background: none;
@@ -124,7 +124,7 @@ h3 {
     justify-content: center;
     width: 40px;
     height: 40px;
-    background-color: #28d8a3;
+    background-color: #49c2ff;
     border-radius: 50%;
     color: white;
     font-size: 20px;

@@ -21,7 +21,7 @@
                         <img src="storage/img/Logo_New.png" alt="img" class="img-fluid">
                     </div>
                 </div>
-                <button class="base-buttons buttons-large w-100 p-5" style="background-color: #46B8F0;" onclick="window.location.href='/home';">Start Order</button>
+                <button class="base-buttons buttons-large w-100 p-5" style="background-color: #46B8F0;" onclick="window.location.href='/mainmenu';">Start Order</button>
             </div>
 
 

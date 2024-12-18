@@ -19,23 +19,23 @@
 <body>
     <nav class="navbar navbar-expand-md navbar-light pt-3 pb-4">
         <div class="container-xxl">
-            <a class="navbar-brand fw-bold" style="font-size: 30px;"><h1><span style="color:#01A8E8; font-weight:700">Only </span><span style="color:#0088C9; font-weight:700">Foods</span></h1></a>
+            <a href="/" class="navbar-brand fw-bold" style="font-size: 30px;"><h1><span style="color:#01A8E8; font-weight:700">Only </span><span style="color:#0088C9; font-weight:700">Foods</span></h1></a>
 
             <div class="d-flex">
                 
                 
                 <div class="position-relative d-inline-flex">
-                    <input class="form-control me-2 ps-5 searchInput" style="background-color: rgba(40, 216, 163, 0.24); border:none; border-radius:10px;" name="query" type="search" placeholder="Search" aria-label="Search" required>
+                    <input class="form-control me-2 ps-5 searchInput" style="background-color: #9fdfff; border:none; border-radius:10px;" name="query" type="search" placeholder="Search" aria-label="Search" required>
                     <i class="bi bi-search position-absolute top-50 start-0 translate-middle-y ms-3"></i>
                 </div>
                     
 
                 <div class="position-relative">
-                    <button class="btn-sm border-0 px-3 ms-3 cart" style="background-color: rgba(40, 216, 163, 0.24); border-radius: 15px;" type="submit">
-                        <i class="bi bi-cart-fill" style="color: #86C87E; font-size: 1.7rem;"></i>
+                    <button class="btn-sm border-0 px-3 ms-3 cart" style="background-color: rgba(0, 195, 255, 0.24); border-radius: 15px;" type="submit">
+                        <i class="bi bi-cart-fill" style="color: #009dff; font-size: 1.7rem;"></i>
                     </button>
                     <div class="position-absolute justify-content-center align-items-center cartNum" 
-                        style="width:25px; height:25px; border-radius:50%; background-color: #86C87E; top:-5px; right:-5px; color:white; font-size:13px;">
+                        style="width:25px; height:25px; border-radius:50%; background-color: #2cdcff; top:-5px; right:-5px; color:white; font-size:13px;">
                         
                     </div>
                 </div>
