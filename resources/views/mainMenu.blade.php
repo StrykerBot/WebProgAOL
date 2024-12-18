@@ -23,9 +23,9 @@
             </div>
         </div>
     </section>
-    <!-- <div class="d-flex justify-content-center align-items-center mb-3">
-        Loading
-    </div> -->
+    <div class="justify-content-center align-items-center mb-3" id="loading" style="font-size:32px; display:none;">
+        Loading...
+    </div>
     <!-- List Food -->
     <section class="listFood"> 
         <div class="container-sm border border-2 p-4 mb-3" style="border-radius:30px;">
@@ -136,8 +136,24 @@
                 counterDisplay.textContent = counter;
             }
 
-            
+            let lastRequestId = 0;
+
             function fetchFoods(category = 'all', page = 1, searchTerm = '') {
+                const loadingElement = document.getElementById('loading');
+                const categoryButtons = document.querySelectorAll('.category-button');
+                
+                const currentRequestId = ++lastRequestId; // Generate a unique ID for this request
+
+                // Show loading and disable buttons
+                if (loadingElement) {
+                    loadingElement.style.display = 'flex';
+                }
+                categoryButtons.forEach(otherButton => {
+                    if (otherButton !== this) {
+                        otherButton.disabled = true;
+                    }
+                });
+
                 fetch("/filter-foods", {
                     method: 'POST',
                     headers: {
@@ -153,12 +169,28 @@
                     return response.json();
                 })
                 .then(data => {
-                    renderFoodItems(data.data); 
-                    renderPaginationControls(data); 
-                    updateFoodBorders(); 
+                    // Only process if this is the latest request
+                    if (currentRequestId === lastRequestId) {
+                        renderFoodItems(data.data);
+                        renderPaginationControls(data);
+                        updateFoodBorders();
+                    }
                 })
                 .catch(error => {
                     console.error('There was a problem with the fetch operation:', error);
+                })
+                .finally(() => {
+                    // Hide loading and enable buttons only for the latest request
+                    if (currentRequestId === lastRequestId) {
+                        if (loadingElement) {
+                            loadingElement.style.display = 'none';
+                        }
+                        categoryButtons.forEach(otherButton => {
+                            if (otherButton !== this) {
+                                otherButton.disabled = false;
+                            }
+                        });
+                    }
                 });
             }
 
